@@ -9,40 +9,14 @@ package tema1reloaded;
  * 
  */
 public enum Materie {
-	/**
-	 * 
-	 */
+
 	Istorie,
-	/**
-	 * 
-	 */
 	Matematica,
-	/**
-	 * 
-	 */
 	Biologie,
-	/**
-	 * 
-	 */
 	Informatica,
-	/**
-	 * 
-	 */
 	Chimie,
-	/**
-	 * 
-	 */
 	Geografie,
-	/**
-	 * 
-	 */
 	Educatie_Fizica,
-	/**
-	 * 
-	 */
 	Fizica,
-	/**
-	 * 
-	 */
 	Desen;
 };

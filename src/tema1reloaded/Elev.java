@@ -4,87 +4,58 @@
 
 package tema1reloaded;
 
-import tema1reloaded.Grupa;
-import tema1reloaded.Materie;
-import tema1reloaded.Parinte;
-import tema1reloaded.Persoana;
+import java.util.ArrayList;
 
 /************************************************************/
 /**
  * 
  */
 public class Elev extends Persoana {
-	/**
-	 * 
-	 */
+
+
 	private Grupa grupa;
-	/**
-	 * 
-	 */
-	private int[] absente;
-	/**
-	 * 
-	 */
 	private Parinte parinte;
 	
-	/**
-	 * 
-	 */
-	public void getNoteElev() {
+	public Elev(String nume, String CNP, long telefon, Grupa grupa, Parinte parinte) {
+		super(nume, CNP, telefon);
+		this.grupa = grupa;
+		this.parinte = parinte;
+	}
+	
+	public void setGrupa(Grupa grupa) {
+		this.grupa = grupa;
 	}
 
-	/**
-	 * 
-	 * @param materie 
-	 */
-	public void motivareAbsenta(Materie materie) {
+	public void setParinte(Parinte parinte) {
+		this.parinte = parinte;
+	}
+	
+	public void getNoteElev(Materie materie) {
+		grupa.getNote(this, materie);
+	}
+	
+	public long getMedieElev(Materie materie) {
+		ArrayList<Integer> note = grupa.getCatalog().get(this.nume).get(materie);
+		int suma = 0;
+		for(Integer i : note)
+			suma += i;
+		
+		double medie = suma/note.size();
+		if(medie - Math.floor(medie) == 0.5)
+			medie += 1;
+		return Math.round(medie);
 	}
 
-	/**
-	 * 
-	 */
 	public void afisareElev() {
+		super.afisare();
 	}
 
-	/**
-	 * 
-	 */
-	public void getAbsente() {
+	public int getAbsente() {
+		return grupa.getAbsente(this);
 	}
 
-	/**
-	 * 
-	 */
-	public void getGrupa() {
+	public Parinte getParinte() {
+		return this.parinte;
 	}
 
-	/**
-	 * 
-	 */
-	public void getNume() {
-	}
-
-	/**
-	 * 
-	 */
-	public void getCNP() {
-	}
-
-	/**
-	 * 
-	 */
-	public void getTelefon() {
-	}
-
-	/**
-	 * 
-	 */
-	public void getParinte() {
-	}
-
-	/**
-	 * 
-	 */
-	public void afisareNote() {
-	}
 };

@@ -6,7 +6,6 @@ package tema1reloaded;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /************************************************************/
 /**
@@ -15,12 +14,32 @@ import java.util.List;
 public class Grupa {
 
 	private String numeGrupa;
-	private ArrayList<Elev> eleviInscrisi = new ArrayList<Elev>();
-	private HashMap<String, HashMap <Materie, ArrayList<Integer>>> catalog = new HashMap<>();
-	private HashMap<String, Integer> absente = new HashMap<>();
+	private ArrayList<Elev> eleviInscrisi;
+	private HashMap<String, HashMap <Materie, ArrayList<Integer>>> catalog;
+	private HashMap<String, Integer> absente;
 	
+
 	public Grupa(String numeGrupa) {
 		this.numeGrupa = numeGrupa;
+		eleviInscrisi = new ArrayList<Elev>();
+		catalog = new HashMap<>();
+		absente = new HashMap<>();
+	}
+	
+	public HashMap<String, HashMap<Materie, ArrayList<Integer>>> getCatalog() {
+		return catalog;
+	}
+	
+	public ArrayList<Elev> getEleviInscrisi() {
+		return eleviInscrisi;
+	}
+	
+	public String getNumeGrupa() {
+		return numeGrupa;
+	}
+	
+	public HashMap<String, Integer> getAbsente() {
+		return absente;
 	}
 
 	
@@ -76,18 +95,17 @@ public class Grupa {
 	}
 
 
-	public void getNote(String nume, String numeMaterie) {
-		if(catalog.containsKey(nume)) {
-			Materie materie = Materie.valueOf(numeMaterie);
-			System.out.println(catalog.get(nume).get(materie).toString());
+	public void getNote(Elev elev, Materie materie) {
+		if(catalog.containsKey(elev.nume)) {
+			System.out.println(materie.name() + " " + catalog.get(elev.nume).get(materie).toString());
 		}
 	}
 
 	/**
 	 * 
 	 */
-	public int getAbsente(String nume) {
-		return absente.get(nume);
+	public int getAbsente(Elev elev) {
+		return absente.get(elev.nume);
 	}
 
 	/**
@@ -97,14 +115,20 @@ public class Grupa {
 	 * @param nota 
 	 * @return 
 	 */
-	public void adaugareNota(String nume, String numeMaterie, int nota) {
-		Materie materie = Materie.valueOf(numeMaterie);
-		catalog.get(nume).get(materie).add(nota);
+	public void adaugareNota(Elev elev, Materie materie, int nota) {
+		catalog.get(elev.nume).get(materie).add(nota);
 	}
 
 
-	public void adaugareAbsenta(String nume) {
-		absente.put(nume, absente.get(nume) + 1);
+	public void adaugareAbsenta(Elev elev) {
+		absente.put(elev.nume, absente.get(elev.nume) + 1);
+	}
+	
+	public void motivareAbsenta(Elev elev) {
+		if(absente.get(elev.nume) > 0)
+			absente.put(elev.nume, absente.get(elev.nume) - 1);
+		else
+			System.out.println(elev.nume + " nu are absente");
 	}
 
 	/**
@@ -119,9 +143,8 @@ public class Grupa {
 		return false;
 	}
 
-	/**
-	 * 
-	 */
+	
+	
 	public void topAbsente() {
 	}
 

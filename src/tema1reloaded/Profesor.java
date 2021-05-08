@@ -4,83 +4,72 @@
 
 package tema1reloaded;
 
-import tema1reloaded.Elev;
-import tema1reloaded.Grupa;
-import tema1reloaded.Materie;
-import tema1reloaded.Persoana;
+import java.util.ArrayList;
 
 /************************************************************/
 /**
  * 
  */
 public class Profesor extends Persoana {
-	/**
-	 * 
-	 */
+
 	private boolean esteDiriginte;
-	/**
-	 * 
-	 */
-	private Grupa diriginteLaGrupa;
-	/**
-	 * 
-	 */
+	private String diriginteLaGrupa;
 	private Materie materiePredata;
-	/**
-	 * 
-	 */
-	private Grupa[] grupeUndePreda;
-	/**
-	 * 
-	 */
-	public Elev[] elev;
-
-	/**
-	 * 
-	 * @param elev 
-	 * @param nota 
-	 * @return 
-	 */
-	public short notareElev(Elev elev, short nota) {
+	private ArrayList<Grupa> grupeUndePreda;
+	
+	
+	public Profesor(String nume, String CNP, long telefon, boolean esteDiriginte, String diriginteLaGrupa,
+			Materie materiePredata) {
+		super(nume, CNP, telefon);
+		this.esteDiriginte = esteDiriginte;
+		this.diriginteLaGrupa = diriginteLaGrupa;
+		this.materiePredata = materiePredata;
+		this.grupeUndePreda = new ArrayList<Grupa>();
+	}
+	
+	public void adaugaGrupaLaCarePreda(Grupa grupa) {
+		if(!grupeUndePreda.contains(grupa))
+			grupeUndePreda.add(grupa);
+		else
+			System.out.println("Grupa a fost deja adaugata");
+	}
+	
+	
+	public void notareElev(Elev elev, int nota) {
+		for(Grupa grupa : grupeUndePreda) 
+			if(grupa.existaElev(elev.nume)) {
+				grupa.adaugareNota(elev, this.materiePredata, nota);
+			}
+	}
+	
+	
+	public void adaugareAbsenta(Elev elev) {
+		for(Grupa grupa : grupeUndePreda) 
+			if(grupa.existaElev(elev.nume)) {
+				grupa.adaugareAbsenta(elev);
+			}
+	}
+	
+	public void motivareAbsenta(Elev elev) {
+		if(this.esteDiriginte) {
+			for(Grupa grupa : grupeUndePreda) 
+				if(grupa.existaElev(elev.nume)) {
+					if(grupa.getNumeGrupa().equals(this.diriginteLaGrupa))
+						grupa.motivareAbsenta(elev);
+				}
+		}
+		else
+			System.out.println("Mars ca nu esti diriginte");
 	}
 
-	/**
-	 * 
-	 * @param elev 
-	 * @return 
-	 */
-	public int adaugareAbsenta(Elev elev) {
-	}
 
-	/**
-	 * 
-	 * @param elev 
-	 * @return 
-	 */
-	public int motivareAbsenta(Elev elev) {
-	}
 
-	/**
-	 * 
-	 */
 	public void notificareSedinta() {
+		if(this.esteDiriginte)
+			System.out.println("Astazi ora 18.00, grupa " + this.diriginteLaGrupa + ", sedinta sau va tai!");
+		else 
+			System.out.println("Nu esti diriginte");
 	}
 
-	/**
-	 * 
-	 */
-	public void getNume() {
-	}
 
-	/**
-	 * 
-	 */
-	public void getTelefon() {
-	}
-
-	/**
-	 * 
-	 */
-	public void getCNP() {
-	}
 };

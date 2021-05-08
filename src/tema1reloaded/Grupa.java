@@ -4,68 +4,90 @@
 
 package tema1reloaded;
 
-import tema1reloaded.Elev;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /************************************************************/
 /**
  * 
  */
 public class Grupa {
-	/**
-	 * 
-	 */
+
 	private String numeGrupa;
-	/**
-	 * 
-	 */
-	private Elev[] eleviInscrisi;
-	/**
-	 * 
-	 */
-	private undefined catalog;
-	/**
-	 * 
-	 */
-	private int[] absente;
+	private ArrayList<Elev> eleviInscrisi = new ArrayList<Elev>();
+	private HashMap<String, HashMap <Materie, ArrayList<Integer>>> catalog = new HashMap<>();
+	private HashMap<String, Integer> absente = new HashMap<>();
+	
+	public Grupa(String numeGrupa) {
+		this.numeGrupa = numeGrupa;
+	}
 
-	/**
-	 * 
-	 * @param elev 
-	 */
+	
 	public void adaugareElev(Elev elev) {
+		
+		if(!this.existaElev(elev.nume)) {
+			eleviInscrisi.add(elev);
+			absente.put(elev.nume, 0);
+		}
+		
+		if(!catalog.containsKey(elev.nume)) {
+			HashMap <Materie, ArrayList<Integer>> subiecteDeStudiu = new HashMap<>();
+			for (Materie materie : Materie.values()) { 
+			    ArrayList<Integer> noteMaterie = new ArrayList<>();
+			    subiecteDeStudiu.put(materie, noteMaterie);
+			}
+			catalog.put(elev.nume, subiecteDeStudiu);
+		}
+		
 	}
 
-	/**
-	 * 
-	 * @param elev 
-	 */
 	private void stergereElev(Elev elev) {
+		if(!eleviInscrisi.isEmpty()) {
+			if(eleviInscrisi.contains(elev)) {
+				eleviInscrisi.remove(elev);
+				catalog.remove(elev.nume);
+				absente.remove(elev.nume);
+			}
+			else
+				System.out.println("Grupa nu contine acest elev");
+		}
+		else
+			System.out.println("Nu exista inca elevi in aceasta grupa");
 	}
 
-	/**
-	 * 
-	 */
+
 	public void afisareGrupa() {
+		for(Elev elev : eleviInscrisi)
+			System.out.println(elev.nume);
+	}
+
+	//use try-catch block
+	public Elev getElev(String nume) {
+		
+		for(Elev elev : eleviInscrisi) {
+			if(nume.equals(elev.nume))
+				return elev;
+		}
+		
+		System.out.println("Elevul nu exista");
+		return null;
+			
+	}
+
+
+	public void getNote(String nume, String numeMaterie) {
+		if(catalog.containsKey(nume)) {
+			Materie materie = Materie.valueOf(numeMaterie);
+			System.out.println(catalog.get(nume).get(materie).toString());
+		}
 	}
 
 	/**
 	 * 
-	 * @param cnpElev 
 	 */
-	public void getElev(String cnpElev) {
-	}
-
-	/**
-	 * 
-	 * @param materie 
-	 */
-	public void getNote(String materie) {
-	}
-
-	/**
-	 * 
-	 */
-	public void getAbsente() {
+	public int getAbsente(String nume) {
+		return absente.get(nume);
 	}
 
 	/**
@@ -75,15 +97,14 @@ public class Grupa {
 	 * @param nota 
 	 * @return 
 	 */
-	public short adaugareNota(Elev elev, String numeMaterie, short nota) {
+	public void adaugareNota(String nume, String numeMaterie, int nota) {
+		Materie materie = Materie.valueOf(numeMaterie);
+		catalog.get(nume).get(materie).add(nota);
 	}
 
-	/**
-	 * 
-	 * @param elev 
-	 * @return 
-	 */
-	public int adaugareAbsenta(Elev elev) {
+
+	public void adaugareAbsenta(String nume) {
+		absente.put(nume, absente.get(nume) + 1);
 	}
 
 	/**
@@ -92,6 +113,10 @@ public class Grupa {
 	 * @return 
 	 */
 	public boolean existaElev(String numeElev) {
+		for(int i=0; i<eleviInscrisi.size(); i++)
+			if(eleviInscrisi.get(i).nume.equals(numeElev))
+				return true;
+		return false;
 	}
 
 	/**
@@ -104,5 +129,6 @@ public class Grupa {
 	 * 
 	 */
 	public void topEleviNote() {
+		
 	}
 };

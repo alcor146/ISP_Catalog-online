@@ -4,8 +4,7 @@
 
 package tema1reloaded;
 
-import tema1reloaded.Elev;
-import tema1reloaded.Persoana;
+import java.util.ArrayList;
 
 /************************************************************/
 /**
@@ -15,43 +14,41 @@ public class Parinte extends Persoana {
 	/**
 	 * 
 	 */
-	private Elev[] copiiElevi;
+	private ArrayList<Elev> copiiElevi;
+	
+	
 
-	/**
-	 * 
-	 */
-	public void verificareNote() {
+	public Parinte(String nume, String CNP, long telefon) {
+		super(nume, CNP, telefon);
+		this.copiiElevi = new ArrayList<Elev>();
 	}
 
-	/**
-	 * 
-	 * @param copil 
-	 */
+
 	public void adaugareCopil(Elev copil) {
+		copiiElevi.add(copil);
 	}
 
-	/**
-	 * 
-	 * @param copil 
-	 */
 	public void stergereCopil(Elev copil) {
+		if(copiiElevi.contains(copil))
+			copiiElevi.remove(copil);
+		else
+			System.out.println("Nu e al tau femeie!");
 	}
 
-	/**
-	 * 
-	 */
-	public void getNume() {
+	public void verificareNote() {
+		for(Elev elev : copiiElevi) {
+			System.out.println(elev.nume + ":");
+			for (Materie materie : Materie.values()) {
+				elev.getNoteElev(materie);
+			}
+			System.out.println("");
+		}
+	}
+	
+	public void verificareAbsente() {
+		for(Elev elev : copiiElevi) {
+			System.out.println(elev.nume + ": " + elev.getAbsente());
+		}
 	}
 
-	/**
-	 * 
-	 */
-	public void getTelefon() {
-	}
-
-	/**
-	 * 
-	 */
-	public void getCNP() {
-	}
 };

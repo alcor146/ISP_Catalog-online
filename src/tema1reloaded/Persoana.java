@@ -21,22 +21,18 @@ public class Persoana {
 	 * 
 	 */
 	protected long telefon;
-
-	/**
-	 * 
-	 */
-	public void getNume() {
+	
+	public Persoana(String nume, String CNP, long telefon) {
+		this.nume = nume;
+		this.CNP = CNP;
+		this.telefon = telefon;
+	}
+	
+	public void afisare() {
+		System.out.println("Nume: " + this.nume);
+		System.out.println("CNP: " + this.CNP);
+		System.out.println("Telefon: " + this.telefon);
 	}
 
-	/**
-	 * 
-	 */
-	public void getCNP() {
-	}
-
-	/**
-	 * 
-	 */
-	public void getTelefon() {
-	}
+	
 };

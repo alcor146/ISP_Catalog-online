@@ -4,8 +4,16 @@
 
 package tema1reloaded;
 
-import tema1reloaded.Grupa;
-import tema1reloaded.Persoana;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
+
+
+
 
 /************************************************************/
 /**
@@ -15,42 +23,131 @@ public class Director extends Persoana {
 	/**
 	 * 
 	 */
-	private Grupa[] grupe;
+	private ArrayList<Grupa> grupe;
 
-	/**
-	 * 
-	 * @param numeGrupa 
-	 */
-	public void getGrupa(String numeGrupa) {
+	public Director(String nume, String CNP, long telefon) {
+		super(nume, CNP, telefon);
+		grupe = new ArrayList<Grupa>();
+	}
+	
+	public ArrayList<Grupa> getGrupe() {
+		return grupe;
+	}
+	
+	public void adaugaGrupa(Grupa grupa) {
+		if(!grupe.contains(grupa))
+			grupe.add(grupa);
+		else
+			System.out.println("Grupa exista deja");
+	}
+	
+	public Grupa getGrupa(String numeGrupa) {
+		for(Grupa grupa : grupe)
+			if(grupa.getNumeGrupa().equals(numeGrupa))
+				return grupa;
+		return null;
+	}
+	
+
+
+	public void topAbsente(String numeGrupa) {
+		//esti invitatul meu daca vrei sa incerci
+		//eu zic sa o scoatem
 	}
 
-	/**
-	 * 
-	 */
-	public void topAbsente() {
-	}
 
-	/**
-	 * 
-	 */
-	public void topEleviNote() {
-	}
+	public void topEleviNote(String numeGrupa) {
+		Grupa g1 = this.getGrupa(numeGrupa);
+		if(g1 != null) {
+			
+			Map<String, Double> unsortedMap = new HashMap<>();
+			
+			for(Elev elev : g1.getEleviInscrisi()) {
+				int suma = 0;
+				for (Materie materie : Materie.values()) { 
+					suma += elev.getMedieElev(materie);
+				}
+				double medie = suma/Materie.values().length;
+				medie = Math.round(medie * 100.0) / 100.0;
+				unsortedMap.put(elev.nume, medie);
+				
+			}
+			
+			Collection<Double> values = unsortedMap.values();   
+	        ArrayList<Double> listOfValues = new ArrayList<>(values);
+	        
+	        Collections.sort(listOfValues, Collections.reverseOrder());
+	        Set<Double> resultSet = new LinkedHashSet<>(listOfValues);
 
-	/**
-	 * 
-	 */
-	public void getNume() {
-	}
 
-	/**
-	 * 
-	 */
-	public void getCNP() {
-	}
+	        ArrayList<Double> noteBursa = new ArrayList<>();
 
-	/**
-	 * 
-	 */
-	public void getTelefon() {
+	        for(Double i : resultSet){
+	            noteBursa.add(i);
+	            if(noteBursa.size() == 6)
+	                break;
+	        }
+
+	        ArrayList<String> premiul1 = new ArrayList<>();
+	        ArrayList<String> premiul2 = new ArrayList<>();
+	        ArrayList<String> premiul3 = new ArrayList<>();
+	        ArrayList<String> mentiune1 = new ArrayList<>();
+	        ArrayList<String> mentiune2 = new ArrayList<>();
+	        ArrayList<String> mentiune3 = new ArrayList<>();
+	        
+	        double c0 = noteBursa.get(0);
+	        double c1 = noteBursa.get(1);
+	        double c2 = noteBursa.get(2);
+	        double c3 = noteBursa.get(3);
+	        double c4 = noteBursa.get(4);
+	        double c5 = noteBursa.get(5);
+
+	        for(String s : unsortedMap.keySet()) {
+	            if(unsortedMap.get(s) == c0)
+	                premiul1.add(s);
+	            if(unsortedMap.get(s) == c1)
+	                premiul2.add(s);
+	            if(unsortedMap.get(s) == c2)
+	                premiul3.add(s);
+	            if(unsortedMap.get(s) == c3)
+	            	mentiune1.add(s);
+	            if(unsortedMap.get(s) == c4)
+	            	mentiune2.add(s);
+	            if(unsortedMap.get(s) == c5)
+	            	mentiune3.add(s);
+	        }
+	        
+	        System.out.print("premiul 1: ");
+	        for(String s : premiul1)
+	            System.out.print(s + " ");
+	        System.out.println();
+	        
+	        System.out.print("premiul 2: ");
+	        for(String s : premiul2)
+	            System.out.print(s + " ");
+	        System.out.println();
+	        
+	        System.out.print("premiul 3: ");
+	        for(String s : premiul3)
+	            System.out.print(s + " ");
+	        System.out.println();
+	        
+	        System.out.print("mentiune 1: ");
+	        for(String s : mentiune1)
+	            System.out.print(s + " ");
+	        System.out.println();
+	        
+	        System.out.print("mentiune 2: ");
+	        for(String s : mentiune2)
+	            System.out.print(s + " ");
+	        System.out.println();
+	        
+	        System.out.print("mentiune 3: ");
+	        for(String s : mentiune3)
+	            System.out.print(s + " ");
+	        System.out.println();
+		}
+
+
 	}
-};
+}

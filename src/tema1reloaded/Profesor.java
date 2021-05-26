@@ -46,7 +46,7 @@ public class Profesor extends Persoana {
 	public void adaugareAbsenta(Elev elev) {
 		for(Grupa grupa : grupeUndePreda) 
 			if(grupa.existaElev(elev.nume)) {
-				grupa.adaugareAbsenta(elev);
+				grupa.adaugareAbsenta(elev,1);
 			}
 	}
 	

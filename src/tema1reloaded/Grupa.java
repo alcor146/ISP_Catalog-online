@@ -120,8 +120,8 @@ public class Grupa {
 	}
 
 
-	public void adaugareAbsenta(Elev elev) {
-		absente.put(elev.nume, absente.get(elev.nume) + 1);
+	public void adaugareAbsenta(Elev elev, int absent) {
+		absente.put(elev.nume, absente.get(elev.nume) + absent);
 	}
 	
 	public void motivareAbsenta(Elev elev) {

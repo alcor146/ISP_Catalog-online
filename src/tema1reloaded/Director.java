@@ -42,13 +42,16 @@ public class Director extends Persoana {
 	}
 	
 	public Grupa getGrupa(String numeGrupa) {
-		for(Grupa grupa : grupe)
-			if(grupa.getNumeGrupa().equals(numeGrupa))
-				return grupa;
+		if(existaGrupa(numeGrupa)) {
+			for(Grupa grupa : grupe)
+				if(grupa.getNumeGrupa().equals(numeGrupa)) {
+					return grupa;
+				}
+		}
+		
 		return null;
 	}
 	
-
 
 	public void topAbsente(String numeGrupa) {
 		Grupa grupa = null;
@@ -70,10 +73,10 @@ public class Director extends Persoana {
 			}			
 		}
 		
-		System.out.println("Elevul cu cele mai multe absente: "+ chiulangiul.nume +" : "+MAX);
+		System.out.println("Elevul cu cele mai multe absente: "+ chiulangiul.nume +" : " + MAX);
 	}
-
-
+	
+	
 	public void topEleviNote(String numeGrupa) {
 		Grupa g1 = this.getGrupa(numeGrupa);
 		if(g1 != null) {
@@ -168,4 +171,14 @@ public class Director extends Persoana {
 
 
 	}
+
+	public boolean existaGrupa(String numeGrupa) {
+		for(Grupa grupa : grupe)
+			if(grupa.getNumeGrupa().equals(numeGrupa)) {
+				return true;
+			}
+		return false;
+
+	}
+	
 }

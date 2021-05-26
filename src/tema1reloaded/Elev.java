@@ -12,7 +12,6 @@ import java.util.ArrayList;
  */
 public class Elev extends Persoana {
 
-
 	private Grupa grupa;
 	private Parinte parinte;
 	
@@ -21,6 +20,7 @@ public class Elev extends Persoana {
 		this.grupa = grupa;
 		this.parinte = parinte;
 	}
+	
 	
 	public void setGrupa(Grupa grupa) {
 		this.grupa = grupa;
@@ -34,7 +34,16 @@ public class Elev extends Persoana {
 		grupa.getNote(this, materie);
 	}
 	
+	boolean areNoteLaMaterie(Materie m) {
+		if(grupa.getCatalog().get(this.nume).get(m).size() > 0)
+			return true;
+		return false;
+	}
+	
 	public long getMedieElev(Materie materie) {
+		if(!areNoteLaMaterie(materie))
+			return -1;
+		
 		ArrayList<Integer> note = grupa.getCatalog().get(this.nume).get(materie);
 		int suma = 0;
 		for(Integer i : note)

@@ -22,18 +22,20 @@ public class Profesor extends Persoana {
 			Materie materiePredata) {
 		super(nume, CNP, telefon);
 		this.esteDiriginte = esteDiriginte;
-		this.diriginteLaGrupa = diriginteLaGrupa;
+		
+		if(esteDiriginte)
+			this.diriginteLaGrupa = diriginteLaGrupa;
+		
 		this.materiePredata = materiePredata;
 		this.grupeUndePreda = new ArrayList<Grupa>();
 	}
 	
 	public void adaugaGrupaLaCarePreda(Grupa grupa) {
-		if(!grupeUndePreda.contains(grupa))
+		if(!predaLaGrupa(grupa))
 			grupeUndePreda.add(grupa);
 		else
 			System.out.println("Grupa a fost deja adaugata");
 	}
-	
 	
 	public void notareElev(Elev elev, int nota) {
 		for(Grupa grupa : grupeUndePreda) 
@@ -41,7 +43,6 @@ public class Profesor extends Persoana {
 				grupa.adaugareNota(elev, this.materiePredata, nota);
 			}
 	}
-	
 	
 	public void adaugareAbsenta(Elev elev) {
 		for(Grupa grupa : grupeUndePreda) 
@@ -62,8 +63,6 @@ public class Profesor extends Persoana {
 			System.out.println("Mars ca nu esti diriginte");
 	}
 
-
-
 	public void notificareSedinta() {
 		if(this.esteDiriginte)
 			System.out.println("Astazi ora 18.00, grupa " + this.diriginteLaGrupa + ", sedinta sau va tai!");
@@ -71,5 +70,11 @@ public class Profesor extends Persoana {
 			System.out.println("Nu esti diriginte");
 	}
 
-
+	public boolean isDiriginte() {
+		return this.esteDiriginte;
+	}
+	
+	public boolean predaLaGrupa(Grupa g) {
+		return grupeUndePreda.contains(g);
+	}
 };

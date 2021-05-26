@@ -17,7 +17,6 @@ public class Parinte extends Persoana {
 	private ArrayList<Elev> copiiElevi;
 	
 	
-
 	public Parinte(String nume, String CNP, long telefon) {
 		super(nume, CNP, telefon);
 		this.copiiElevi = new ArrayList<Elev>();
@@ -27,9 +26,9 @@ public class Parinte extends Persoana {
 	public void adaugareCopil(Elev copil) {
 		copiiElevi.add(copil);
 	}
-
+	
 	public void stergereCopil(Elev copil) {
-		if(copiiElevi.contains(copil))
+		if(areCopilul(copil))
 			copiiElevi.remove(copil);
 		else
 			System.out.println("Nu e al tau femeie!");
@@ -50,5 +49,8 @@ public class Parinte extends Persoana {
 			System.out.println(elev.nume + ": " + elev.getAbsente());
 		}
 	}
-
+	
+	public boolean areCopilul(Elev e) {
+		return copiiElevi.contains(e);
+	}
 };

@@ -16,7 +16,11 @@ public class Aplicatie {
 		g1.adaugareElev(e2);
 		g1.adaugareElev(e3);
 		g1.adaugareElev(e4);
+		g1.adaugareNota(e1, Materie.Biologie, 5);
 		
+		System.out.println(e1.areNoteLaMaterie(Materie.Biologie));
+		System.out.println(e1.areNoteLaMaterie(Materie.Istorie));
+
 		for(int i =0; i<5;i++) {
 			g1.adaugareAbsenta(e1, i);
 			g1.adaugareAbsenta(e2, i+3);

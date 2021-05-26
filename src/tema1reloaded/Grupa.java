@@ -41,7 +41,6 @@ public class Grupa {
 	public HashMap<String, Integer> getAbsente() {
 		return absente;
 	}
-
 	
 	public void adaugareElev(Elev elev) {
 		
@@ -60,10 +59,11 @@ public class Grupa {
 		}
 		
 	}
-
+	
 	private void stergereElev(Elev elev) {
-		if(!eleviInscrisi.isEmpty()) {
-			if(eleviInscrisi.contains(elev)) {
+		
+		if(this.grupaAreElevi()) {
+			if(existaElevObiect(elev)) {
 				eleviInscrisi.remove(elev);
 				catalog.remove(elev.nume);
 				absente.remove(elev.nume);
@@ -94,7 +94,6 @@ public class Grupa {
 			
 	}
 
-
 	public void getNote(Elev elev, Materie materie) {
 		if(catalog.containsKey(elev.nume)) {
 			System.out.println(materie.name() + " " + catalog.get(elev.nume).get(materie).toString());
@@ -105,7 +104,9 @@ public class Grupa {
 	 * 
 	 */
 	public int getAbsente(Elev elev) {
-		return absente.get(elev.nume);
+		if(this.existaElevObiect(elev))
+			return absente.get(elev.nume);
+		else return -1;
 	}
 
 	/**
@@ -115,17 +116,29 @@ public class Grupa {
 	 * @param nota 
 	 * @return 
 	 */
+	
 	public void adaugareNota(Elev elev, Materie materie, int nota) {
-		catalog.get(elev.nume).get(materie).add(nota);
+		if(this.existaElevObiect(elev)) {
+			if(verificareNota(nota)) {
+				catalog.get(elev.nume).get(materie).add(nota);
+			}
+		}
+		else {
+			System.out.println("Elevuol nu exita in aceasta grupa !");
+		}
 	}
 
 
 	public void adaugareAbsenta(Elev elev, int absent) {
-		absente.put(elev.nume, absente.get(elev.nume) + absent);
+		if(this.existaElevObiect(elev)) {
+			absente.put(elev.nume, absente.get(elev.nume) + absent);
+		}
+		else 
+			System.out.println("Nu exista elevul");
 	}
 	
 	public void motivareAbsenta(Elev elev) {
-		if(absente.get(elev.nume) > 0)
+		if(sePotMotivaAbsente(elev))
 			absente.put(elev.nume, absente.get(elev.nume) - 1);
 		else
 			System.out.println(elev.nume + " nu are absente");
@@ -137,13 +150,34 @@ public class Grupa {
 	 * @return 
 	 */
 	public boolean existaElev(String numeElev) {
-		for(int i=0; i<eleviInscrisi.size(); i++)
+		for(int i=0; i < eleviInscrisi.size(); i++)
 			if(eleviInscrisi.get(i).nume.equals(numeElev))
 				return true;
 		return false;
 	}
-
 	
+	public boolean verificareNota(int nota) {
+		if(nota>0 && nota < 11) {
+			return true;
+		}
+		return false;
+	}
+	
+//	public boolean elevulAreNote(Elev elev) {
+//		return this.catalog.get(elev.nume).get(Materie.Biologie).size() > 0;
+//	}
+	
+	boolean sePotMotivaAbsente(Elev elev) {
+		return absente.get(elev.nume) > 0;
+	}
+	
+	public boolean existaElevObiect(Elev e) {
+		return eleviInscrisi.contains(e);
+	}
+	
+	public boolean grupaAreElevi() {
+		return !eleviInscrisi.isEmpty();
+	}
 	
 	public void topAbsente() {
 	}

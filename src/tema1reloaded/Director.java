@@ -51,8 +51,26 @@ public class Director extends Persoana {
 
 
 	public void topAbsente(String numeGrupa) {
-		//esti invitatul meu daca vrei sa incerci
-		//eu zic sa o scoatem
+		Grupa grupa = null;
+		int MAX = 0; int absente = 0;
+		Elev chiulangiul = null;
+		for(Grupa g : grupe)
+			if(g.getNumeGrupa().equals(numeGrupa)) {
+				grupa = g;
+				break;
+			}
+		
+		for(Elev elev : grupa.getEleviInscrisi()) {
+			
+			absente = elev.getAbsente();
+			
+			if(absente > MAX) { 
+				MAX = absente;
+				chiulangiul = elev;
+			}			
+		}
+		
+		System.out.println("Elevul cu cele mai multe absente: "+ chiulangiul.nume +" : "+MAX);
 	}
 
 

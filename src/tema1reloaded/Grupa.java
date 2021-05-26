@@ -138,8 +138,9 @@ public class Grupa {
 	}
 	
 	public void motivareAbsenta(Elev elev) {
-		if(sePotMotivaAbsente(elev))
+		if(sePotMotivaAbsente(elev)) {
 			absente.put(elev.nume, absente.get(elev.nume) - 1);
+		}
 		else
 			System.out.println(elev.nume + " nu are absente");
 	}
@@ -157,7 +158,7 @@ public class Grupa {
 	}
 	
 	public boolean verificareNota(int nota) {
-		if(nota>0 && nota < 11) {
+		if(nota > 0 && nota < 11) {
 			return true;
 		}
 		return false;
@@ -168,6 +169,7 @@ public class Grupa {
 //	}
 	
 	boolean sePotMotivaAbsente(Elev elev) {
+		
 		return absente.get(elev.nume) > 0;
 	}
 	

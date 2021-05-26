@@ -37,6 +37,10 @@ public class Profesor extends Persoana {
 			System.out.println("Grupa a fost deja adaugata");
 	}
 	
+//	public boolean seAflaInGrupaUndePredaProful() {
+//		
+//	}
+	
 	public void notareElev(Elev elev, int nota) {
 		for(Grupa grupa : grupeUndePreda) 
 			if(grupa.existaElev(elev.nume)) {
@@ -55,7 +59,7 @@ public class Profesor extends Persoana {
 		if(this.esteDiriginte) {
 			for(Grupa grupa : grupeUndePreda) 
 				if(grupa.existaElev(elev.nume)) {
-					if(grupa.getNumeGrupa().equals(this.diriginteLaGrupa))
+					if(grupa.getNumeGrupa().equals(this.diriginteLaGrupa) && sePoateMotivaAbsenta(grupa,elev))
 						grupa.motivareAbsenta(elev);
 				}
 		}
@@ -69,9 +73,27 @@ public class Profesor extends Persoana {
 		else 
 			System.out.println("Nu esti diriginte");
 	}
-
-	public boolean isDiriginte() {
-		return this.esteDiriginte;
+	
+	public boolean verificareNota(int nota) {
+		if(nota > 0 && nota < 11)
+			return true;
+		return false;
+	}
+	
+	public boolean sePoateMotivaAbsenta(Grupa g, Elev e) {
+		return g.sePotMotivaAbsente(e);
+	}
+	
+	public boolean isDiriginte(Grupa g) {
+		if(this.esteDiriginte) {
+			if(this.diriginteLaGrupa == g.getNumeGrupa())
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean existaElevInGrupa(Elev e, Grupa g) {
+		return g.existaElevObiect(e);
 	}
 	
 	public boolean predaLaGrupa(Grupa g) {

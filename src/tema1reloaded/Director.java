@@ -63,6 +63,11 @@ public class Director extends Persoana {
 				break;
 			}
 		
+		if(grupa == null){
+			System.out.println("Nu exista elevi in grupa");
+			return;
+		}
+		
 		for(Elev elev : grupa.getEleviInscrisi()) {
 			
 			absente = elev.getAbsente();

@@ -34,11 +34,6 @@ public class Elev extends Persoana {
 		grupa.getNote(this, materie);
 	}
 	
-	boolean areNoteLaMaterie(Materie m) {
-		if(grupa.getCatalog().get(this.nume).get(m).size() > 0)
-			return true;
-		return false;
-	}
 	
 	public long getMedieElev(Materie materie) {
 		if(!areNoteLaMaterie(materie))
@@ -66,5 +61,12 @@ public class Elev extends Persoana {
 	public Parinte getParinte() {
 		return this.parinte;
 	}
-
+	
+	//vezi orel
+	boolean areNoteLaMaterie(Materie m) {
+		if(grupa.getCatalog().get(this.nume).get(m).size() > 0)
+			return true;
+		return false;
+	}
+	
 };

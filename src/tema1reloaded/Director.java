@@ -52,7 +52,7 @@ public class Director extends Persoana {
 		return null;
 	}
 	
-
+	
 	public void topAbsente(String numeGrupa) {
 		Grupa grupa = null;
 		int MAX = 0; int absente = 0;
@@ -62,6 +62,9 @@ public class Director extends Persoana {
 				grupa = g;
 				break;
 			}
+		if(!sePoateFaceTopAbsente(grupa)) {
+			return;
+		}
 		
 		if(grupa == null){
 			System.out.println("Nu exista elevi in grupa");
@@ -84,6 +87,9 @@ public class Director extends Persoana {
 	
 	public void topEleviNote(String numeGrupa) {
 		Grupa g1 = this.getGrupa(numeGrupa);
+		if(!sePoateFaceTopEleviNote(g1))
+			return ;
+		
 		if(g1 != null) {
 			
 			Map<String, Double> unsortedMap = new HashMap<>();
@@ -176,7 +182,35 @@ public class Director extends Persoana {
 
 
 	}
-
+	
+	public boolean sePoateFaceTopEleviNote(Grupa g){
+		int elevBun = 0;
+		
+		for(Elev elev : g.getEleviInscrisi()) {
+			int suma = 0;
+			for (Materie materie : Materie.values()) { 
+				suma += elev.getMedieElev(materie);
+			}
+			double medie = suma/Materie.values().length;
+			medie = Math.round(medie * 100.0) / 100.0;
+			
+			//elev cu media >= 6 se adauga la numaratoare
+			if(medie > 5.99) {
+				elevBun ++;
+			}
+			
+			if(elevBun > 5)
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean sePoateFaceTopAbsente(Grupa g) {
+		return g.getEleviInscrisi().size() > 2;
+		
+	}
+	
 	public boolean existaGrupa(String numeGrupa) {
 		for(Grupa grupa : grupe)
 			if(grupa.getNumeGrupa().equals(numeGrupa)) {
